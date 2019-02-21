@@ -27,19 +27,4 @@ trait HasAttributes
     {
         return isset($this->attributes[$key]);
     }
-
-    public function setAttributes($attributes)
-    {
-        $this->attributes = $attributes;
-    }
-
-    public function mergeAttributes($attributes)
-    {
-        $this->attributes = array_merge($this->attributes, $attributes);
-    }
-
-    public function all(): iterable
-    {
-        return $this->toArray();
-    }
 }
