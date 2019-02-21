@@ -1,10 +1,10 @@
 <?php
 
-namespace Authters\Tracker\Event\Named;
+namespace AuthtersTest\Tracker\Mock;
 
 use Authters\Tracker\Event\AbstractNamedEvent;
 
-final class OnDispatched extends AbstractNamedEvent
+class SomeDispatchedEvent extends AbstractNamedEvent
 {
     public function name(): string
     {

@@ -7,7 +7,7 @@ use Authters\Tracker\Contract\NamedEvent;
 use Authters\Tracker\Contract\SubscribedEvent;
 use Authters\Tracker\DefaultTracker;
 use Authters\Tracker\Event\AbstractSubscriber;
-use Authters\Tracker\Event\Named\OnDispatched;
+use AuthtersTest\Tracker\Mock\SomeDispatchedEvent;
 use AuthtersTest\Tracker\TestCase;
 
 class DefaultTrackerTest extends TestCase
@@ -18,7 +18,7 @@ class DefaultTrackerTest extends TestCase
     public function it_dispatch_event_subscriber(): void
     {
         $tracker = new DefaultTracker();
-        $event = new OnDispatched();
+        $event = new SomeDispatchedEvent();
 
         $tracker->subscribe($event);
         $actionEvent = $tracker->newActionEvent($event);
@@ -37,7 +37,7 @@ class DefaultTrackerTest extends TestCase
     public function it_dispatch_multiple_events_subscribers(): void
     {
         $tracker = new DefaultTracker();
-        $event = new OnDispatched();
+        $event = new SomeDispatchedEvent();
 
         $tracker->subscribe($event);
         $actionEvent = $tracker->newActionEvent($event);
@@ -57,7 +57,7 @@ class DefaultTrackerTest extends TestCase
     public function it_stop_propagation_of_events(): void
     {
         $tracker = new DefaultTracker();
-        $event = new OnDispatched();
+        $event = new SomeDispatchedEvent();
 
         $tracker->subscribe($event);
         $actionEvent = $tracker->newActionEvent($event);
@@ -81,7 +81,7 @@ class DefaultTrackerTest extends TestCase
     public function it_stop_propagation_of_events_with_callback(): void
     {
         $tracker = new DefaultTracker();
-        $event = new OnDispatched();
+        $event = new SomeDispatchedEvent();
 
         $tracker->subscribe($event);
         $actionEvent = $tracker->newActionEvent($event);
@@ -112,7 +112,7 @@ class DefaultTrackerTest extends TestCase
 
             public function subscribeTo(): NamedEvent
             {
-                return new OnDispatched();
+                return new SomeDispatchedEvent();
             }
 
             public function applyTo(): callable
@@ -135,7 +135,7 @@ class DefaultTrackerTest extends TestCase
 
             public function subscribeTo(): NamedEvent
             {
-                return new OnDispatched();
+                return new SomeDispatchedEvent();
             }
 
             public function applyTo(): callable
@@ -158,7 +158,7 @@ class DefaultTrackerTest extends TestCase
 
             public function subscribeTo(): NamedEvent
             {
-                return new OnDispatched();
+                return new SomeDispatchedEvent();
             }
 
             public function applyTo(): callable

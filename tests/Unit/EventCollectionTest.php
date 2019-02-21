@@ -5,8 +5,8 @@ namespace AuthtersTest\Tracker\Unit;
 use Authters\Tracker\Contract\NamedEvent;
 use Authters\Tracker\Contract\SubscribedEvent;
 use Authters\Tracker\Event\AbstractSubscriber;
-use Authters\Tracker\Event\Named\OnDispatched;
 use Authters\Tracker\EventCollection;
+use AuthtersTest\Tracker\Mock\SomeDispatchedEvent;
 use AuthtersTest\Tracker\TestCase;
 
 class EventCollectionTest extends TestCase
@@ -20,7 +20,7 @@ class EventCollectionTest extends TestCase
 
         $this->assertFalse($col->hasEvents());
 
-        $col->addEvent(new OnDispatched());
+        $col->addEvent(new SomeDispatchedEvent());
 
         $this->assertTrue($col->hasEvents());
     }
@@ -33,7 +33,7 @@ class EventCollectionTest extends TestCase
         $col = new EventCollection();
         $this->assertFalse($col->hasEvents());
 
-        $event = new OnDispatched();
+        $event = new SomeDispatchedEvent();
         $this->assertFalse($col->hasEvent($event));
 
         $col->addEvent($event);
@@ -47,7 +47,7 @@ class EventCollectionTest extends TestCase
     public function it_push_subscriber_to_event_named(): void
     {
         $col = new EventCollection();
-        $col->addEvent($event = new OnDispatched());
+        $col->addEvent($event = new SomeDispatchedEvent());
 
         $sub = $this->getSubscriber();
         $this->assertFalse(in_array($sub, $event->events()));
@@ -63,7 +63,7 @@ class EventCollectionTest extends TestCase
     {
         $events = new EventCollection();
 
-        $events->addEvent($event = new OnDispatched());
+        $events->addEvent($event = new SomeDispatchedEvent());
         $this->assertEmpty($event->events());
 
         $fixture = [$sub2 = $this->getAnotherSubscriber(), $sub1 = $this->getSubscriber()];
@@ -85,7 +85,7 @@ class EventCollectionTest extends TestCase
     public function it_raise_exception_when_event_named_is_not_unique(): void
     {
         $events = new EventCollection();
-        $event = new OnDispatched();
+        $event = new SomeDispatchedEvent();
 
         $this->expectExceptionMessage("Event {$event->name()} already exists");
 
@@ -119,7 +119,7 @@ class EventCollectionTest extends TestCase
 
             public function subscribeTo(): NamedEvent
             {
-                return new OnDispatched();
+                return new SomeDispatchedEvent();
             }
 
             public function applyTo(): callable
@@ -141,7 +141,7 @@ class EventCollectionTest extends TestCase
 
             public function subscribeTo(): NamedEvent
             {
-                return new OnDispatched();
+                return new SomeDispatchedEvent();
             }
 
             public function applyTo(): callable
