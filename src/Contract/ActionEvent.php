@@ -16,9 +16,9 @@ interface ActionEvent
 
     public function setMessageHandler(callable $messageHandler): void;
 
-    public function exception(): \Throwable;
+    public function exception(): ?\Throwable;
 
-    public function setException(\Throwable $exception): void;
+    public function setException(\Throwable $exception = null): void;
 
     public function isPropagationStopped(): bool;
 

@@ -81,12 +81,12 @@ class DefaultActionEvent implements ActionEvent
         $this->messageHandler = $messageHandler;
     }
 
-    public function exception(): \Throwable
+    public function exception(): ?\Throwable
     {
         return $this->exception;
     }
 
-    public function setException(\Throwable $exception): void
+    public function setException(\Throwable $exception = null): void
     {
         $this->exception = $exception;
     }

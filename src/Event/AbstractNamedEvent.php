@@ -8,7 +8,7 @@ use Authters\Tracker\Contract\SubscribedEvent;
 abstract class AbstractNamedEvent implements NamedEvent
 {
     /**
-     * @var callable
+     * @var string[object
      */
     protected $target;
 
@@ -17,7 +17,7 @@ abstract class AbstractNamedEvent implements NamedEvent
      */
     protected $events = [];
 
-    public function __construct(callable $target = null)
+    public function __construct($target = null)
     {
         $this->target = $target;
     }
@@ -27,7 +27,7 @@ abstract class AbstractNamedEvent implements NamedEvent
         $this->events[] = $event;
     }
 
-    public function target(): ?callable
+    public function target()
     {
         return $this->target;
     }

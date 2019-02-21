@@ -10,7 +10,7 @@ interface NamedEvent extends Event
 
     public function name(): string;
 
-    public function target(): ?callable;
+    public function target();
 
     public function __toString(): string;
 }

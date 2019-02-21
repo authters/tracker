@@ -22,7 +22,9 @@ class ExceptionSubscriber extends AbstractSubscriber
     public function applyTo(): callable
     {
         return function (ActionEvent $event) {
-
+            if ($exception = $event->exception()) {
+                throw $exception;
+            }
         };
     }
 }
