@@ -60,7 +60,9 @@ final class EventCollection
 
     public function hasEvent(NamedEvent $event): bool
     {
-        return $this->events->contains($event);
+        return null !== $this->events->first(function (NamedEvent $namedEvent) use ($event) {
+                return $namedEvent->name() === $event->name();
+            });
     }
 
     public function hasEvents(): bool
@@ -84,6 +86,8 @@ final class EventCollection
 
     protected function namedEvent(NamedEvent $event): ?NamedEvent
     {
-        return $this->events->whereInstanceOf(\get_class($event))->first();
+        return $this->events->first(function (NamedEvent $namedEvent) use ($event) {
+                return $namedEvent->name() === $event->name();
+            });
     }
 }

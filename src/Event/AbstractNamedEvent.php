@@ -8,14 +8,14 @@ use Authters\Tracker\Contract\SubscribedEvent;
 abstract class AbstractNamedEvent implements NamedEvent
 {
     /**
-     * @var array
-     */
-    protected $events = [];
-
-    /**
      * @var callable
      */
     protected $target;
+
+    /**
+     * @var array
+     */
+    protected $events = [];
 
     public function __construct(callable $target = null)
     {

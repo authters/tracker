@@ -9,6 +9,5 @@ abstract class AbstractSubscriber implements SubscribedEvent
 {
     public function __invoke(Tracker $tracker): void
     {
-        $tracker->subscribe($this);
     }
 }

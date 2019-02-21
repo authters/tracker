@@ -5,7 +5,7 @@ namespace AuthtersTest\Tracker\Unit;
 use Authters\Tracker\Contract\NamedEvent;
 use Authters\Tracker\Contract\SubscribedEvent;
 use Authters\Tracker\Event\AbstractSubscriber;
-use Authters\Tracker\Event\Named\OnInitialized;
+use Authters\Tracker\Event\Named\OnDispatched;
 use Authters\Tracker\EventCollection;
 use AuthtersTest\Tracker\TestCase;
 
@@ -20,7 +20,7 @@ class EventCollectionTest extends TestCase
 
         $this->assertFalse($col->hasEvents());
 
-        $col->addEvent(new OnInitialized());
+        $col->addEvent(new OnDispatched());
 
         $this->assertTrue($col->hasEvents());
     }
@@ -33,7 +33,7 @@ class EventCollectionTest extends TestCase
         $col = new EventCollection();
         $this->assertFalse($col->hasEvents());
 
-        $event = new OnInitialized();
+        $event = new OnDispatched();
         $this->assertFalse($col->hasEvent($event));
 
         $col->addEvent($event);
@@ -47,7 +47,7 @@ class EventCollectionTest extends TestCase
     public function it_push_subscriber_to_event_named(): void
     {
         $col = new EventCollection();
-        $col->addEvent($event = new OnInitialized());
+        $col->addEvent($event = new OnDispatched());
 
         $sub = $this->getSubscriber();
         $this->assertFalse(in_array($sub, $event->events()));
@@ -63,7 +63,7 @@ class EventCollectionTest extends TestCase
     {
         $events = new EventCollection();
 
-        $events->addEvent($event = new OnInitialized());
+        $events->addEvent($event = new OnDispatched());
         $this->assertEmpty($event->events());
 
         $fixture = [$sub2 = $this->getAnotherSubscriber(), $sub1 = $this->getSubscriber()];
@@ -85,7 +85,7 @@ class EventCollectionTest extends TestCase
     public function it_raise_exception_when_event_named_is_not_unique(): void
     {
         $events = new EventCollection();
-        $event = new OnInitialized();
+        $event = new OnDispatched();
 
         $this->expectExceptionMessage("Event {$event->name()} already exists");
 
@@ -119,7 +119,7 @@ class EventCollectionTest extends TestCase
 
             public function subscribeTo(): NamedEvent
             {
-                return new OnInitialized();
+                return new OnDispatched();
             }
 
             public function applyTo(): callable
@@ -141,7 +141,7 @@ class EventCollectionTest extends TestCase
 
             public function subscribeTo(): NamedEvent
             {
-                return new OnInitialized();
+                return new OnDispatched();
             }
 
             public function applyTo(): callable

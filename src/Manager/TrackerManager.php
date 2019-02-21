@@ -60,12 +60,16 @@ class TrackerManager
         }
 
         foreach ($events as $event) {
-            $tracker->subscribe($event);
+            $tracker->subscribe(
+                $this->app->make($event)
+            );
         }
 
         if ($subscribers = $service['subscribers'] ?? []) {
             foreach ($subscribers as $subscriber) {
-                $tracker->subscribe($subscriber);
+                   $tracker->subscribe(
+                    $this->app->make($subscriber)
+                );
             }
         }
 

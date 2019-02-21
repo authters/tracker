@@ -9,7 +9,6 @@ use Authters\Tracker\Event\Named\OnDispatched;
 
 class RouteSubscriber extends AbstractSubscriber
 {
-
     public function priority(): int
     {
         return 20000;
