@@ -120,17 +120,4 @@ class DefaultActionEvent implements ActionEvent
     {
         return $this->event;
     }
-
-    public function toArray(): array
-    {
-        return [
-            'current_event' => $this->event,
-            'message' => $this->message,
-            'message_name' => $this->messageName,
-            'message_handler' => $this->messageHandler,
-            'message_handled' => $this->isMessageHandled,
-            'is_propagation_stopped' => $this->isPropagationStopped,
-            'exception' => $this->exception
-        ];
-    }
 }

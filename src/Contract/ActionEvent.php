@@ -31,6 +31,4 @@ interface ActionEvent
     public function setEvent(NamedEvent $event): void;
 
     public function currentEvent(): NamedEvent;
-
-    public function toArray(): array;
 }
