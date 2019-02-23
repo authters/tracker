@@ -2,7 +2,7 @@
 
 namespace AuthtersTest\Tracker\Unit;
 
-use Authters\Tracker\Contract\ActionEvent;
+use Authters\Tracker\Contract\MessageActionEvent;
 use Authters\Tracker\DefaultActionEvent;
 use AuthtersTest\Tracker\Mock\SomeDispatchedEvent;
 use AuthtersTest\Tracker\TestCase;
@@ -14,7 +14,7 @@ class DefaultActionEventTest extends TestCase
      */
     public function it_apply_callback_on_constructor(): void
     {
-        $event = new DefaultActionEvent(new SomeDispatchedEvent(), function (ActionEvent $event) {
+        $event = new DefaultActionEvent(new SomeDispatchedEvent(), function (MessageActionEvent $event) {
             $this->assertFalse($event->isMessageHandled());
 
             $event->setMessageHandled(true);
@@ -39,7 +39,7 @@ class DefaultActionEventTest extends TestCase
      */
     public function it_reset_exception(): void
     {
-        new DefaultActionEvent(new SomeDispatchedEvent(), function (ActionEvent $event) {
+        new DefaultActionEvent(new SomeDispatchedEvent(), function (MessageActionEvent $event) {
             $this->assertNull($event->exception());
 
             $event->setException(new \RuntimeException('foo'));

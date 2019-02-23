@@ -3,6 +3,7 @@
 namespace AuthtersTest\Tracker\Unit;
 
 use Authters\Tracker\Contract\ActionEvent;
+use Authters\Tracker\Contract\MessageActionEvent;
 use Authters\Tracker\Contract\NamedEvent;
 use Authters\Tracker\Contract\SubscribedEvent;
 use Authters\Tracker\DefaultTracker;
@@ -92,7 +93,7 @@ class DefaultTrackerTest extends TestCase
         $tracker->subscribe($this->getDispatcherSubscriber());
         $tracker->subscribe($this->getAnotherDispatcherSubscriber());
 
-        $tracker->emitUntil($actionEvent, function (ActionEvent $event) {
+        $tracker->emitUntil($actionEvent, function (MessageActionEvent $event) {
             if ($event->message() === 'foo') {
                 return true;
             }
@@ -117,7 +118,7 @@ class DefaultTrackerTest extends TestCase
 
             public function applyTo(): callable
             {
-                return function (ActionEvent $event) {
+                return function (MessageActionEvent $event) {
                     $event->setMessage('foo');
                 };
             }
@@ -140,7 +141,7 @@ class DefaultTrackerTest extends TestCase
 
             public function applyTo(): callable
             {
-                return function (ActionEvent $event) {
+                return function (MessageActionEvent $event) {
                     $event->setMessage('bar');
                 };
             }
@@ -163,7 +164,7 @@ class DefaultTrackerTest extends TestCase
 
             public function applyTo(): callable
             {
-                return function (ActionEvent $event) {
+                return function (MessageActionEvent $event) {
                     $event->stopPropagation(true);
                 };
             }

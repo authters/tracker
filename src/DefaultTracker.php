@@ -4,6 +4,7 @@ namespace Authters\Tracker;
 
 use Authters\Tracker\Contract\ActionEvent;
 use Authters\Tracker\Contract\Event;
+use Authters\Tracker\Contract\MessageActionEvent;
 use Authters\Tracker\Contract\NamedEvent;
 use Authters\Tracker\Contract\SubscribedEvent;
 use Authters\Tracker\Contract\Tracker;
@@ -21,6 +22,11 @@ class DefaultTracker implements Tracker
         $this->events = new EventCollection($eventNames);
     }
 
+    /**
+     * @param NamedEvent $event
+     * @param callable|null $callback
+     * @return ActionEvent|MessageActionEvent
+     */
     public function newActionEvent(NamedEvent $event, callable $callback = null): ActionEvent
     {
         return new DefaultActionEvent($event, $callback);

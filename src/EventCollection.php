@@ -74,6 +74,13 @@ final class EventCollection
         return $this->events->count() > 0;
     }
 
+    protected function namedEvent(NamedEvent $event): ?NamedEvent
+    {
+        return $this->events->first(function (NamedEvent $namedEvent) use ($event) {
+            return $namedEvent->name() === $event->name();
+        });
+    }
+
     private function sortEvents(Collection $events): Collection
     {
         return $events->sortByDesc(function (SubscribedEvent $subscriber) {
@@ -85,13 +92,6 @@ final class EventCollection
     {
         array_walk($events, function (NamedEvent $event) {
             $this->addEvent($event);
-        });
-    }
-
-    protected function namedEvent(NamedEvent $event): ?NamedEvent
-    {
-        return $this->events->first(function (NamedEvent $namedEvent) use ($event) {
-            return $namedEvent->name() === $event->name();
         });
     }
 }
