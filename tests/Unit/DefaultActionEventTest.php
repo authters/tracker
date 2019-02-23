@@ -47,7 +47,6 @@ class DefaultActionEventTest extends TestCase
 
             $event->setException(null);
             $this->assertNull($event->exception());
-
         });
     }
 }

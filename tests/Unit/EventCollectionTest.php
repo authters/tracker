@@ -50,10 +50,10 @@ class EventCollectionTest extends TestCase
         $col->addEvent($event = new SomeDispatchedEvent());
 
         $sub = $this->getSubscriber();
-        $this->assertFalse(in_array($sub, $event->events()));
+        $this->assertFalse(in_array($sub, $event->subscribers()));
 
         $col->pushSubscriber($sub);
-        $this->assertTrue(in_array($sub, $event->events()));
+        $this->assertTrue(in_array($sub, $event->subscribers()));
     }
 
     /**
@@ -64,7 +64,7 @@ class EventCollectionTest extends TestCase
         $events = new EventCollection();
 
         $events->addEvent($event = new SomeDispatchedEvent());
-        $this->assertEmpty($event->events());
+        $this->assertEmpty($event->subscribers());
 
         $fixture = [$sub2 = $this->getAnotherSubscriber(), $sub1 = $this->getSubscriber()];
 
@@ -73,9 +73,34 @@ class EventCollectionTest extends TestCase
         $events->pushSubscriber($sub1);
         $events->pushSubscriber($sub2);
 
-        $this->assertCount(2, $event->events());
+        $this->assertCount(2, $event->subscribers());
 
         $this->assertEquals($fixture, $events->fromEvent($event)->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function it_remove_subscriber_from_event(): void
+    {
+        $events = new EventCollection();
+
+        $events->addEvent($event = new SomeDispatchedEvent());
+        $this->assertEmpty($event->subscribers());
+
+        $events->pushSubscriber($sub = $this->getSubscriber());
+        $this->assertCount(1, $event->subscribers());
+
+        $found = false;
+        foreach ($event->subscribers() as $event) {
+            if ($event === $sub) {
+                $found = true;
+            }
+        }
+
+        $this->assertTrue($found);
+        $this->assertTrue($events->removeSubscriber($sub));
+        $this->assertFalse($events->removeSubscriber($sub));
     }
 
     /**

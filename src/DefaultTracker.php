@@ -68,6 +68,10 @@ class DefaultTracker implements Tracker
 
     public function unsubscribe(Event $event): bool
     {
+        if ($event instanceof SubscribedEvent) {
+            return $this->events->removeSubscriber($event);
+        }
+
         return false;
     }
 }

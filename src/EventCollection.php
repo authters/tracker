@@ -44,9 +44,13 @@ final class EventCollection
         throw new RuntimeException("Event {$event->subscribeTo()->name()} not found");
     }
 
-    public function removeSubscriber(SubscribedEvent $event): bool
+    public function removeSubscriber(SubscribedEvent $subscriber): bool
     {
-        return false;
+        if (!$namedEvent = $this->namedEvent($subscriber->subscribeTo())) {
+            return false;
+        }
+
+        return $namedEvent->remove($subscriber);
     }
 
     public function fromEvent(NamedEvent $event): Collection
@@ -55,7 +59,7 @@ final class EventCollection
             throw new RuntimeException("Event {$event->name()} not found");
         }
 
-        return $this->sortEvents(new Collection($this->namedEvent($event)->events()));
+        return $this->sortEvents(new Collection($this->namedEvent($event)->subscribers()));
     }
 
     public function hasEvent(NamedEvent $event): bool
@@ -67,7 +71,7 @@ final class EventCollection
 
     public function hasEvents(): bool
     {
-        return 0 !== $this->events->count();
+        return $this->events->count() > 0;
     }
 
     private function sortEvents(Collection $events): Collection
@@ -87,7 +91,7 @@ final class EventCollection
     protected function namedEvent(NamedEvent $event): ?NamedEvent
     {
         return $this->events->first(function (NamedEvent $namedEvent) use ($event) {
-                return $namedEvent->name() === $event->name();
-            });
+            return $namedEvent->name() === $event->name();
+        });
     }
 }

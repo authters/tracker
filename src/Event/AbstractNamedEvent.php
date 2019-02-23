@@ -15,7 +15,7 @@ abstract class AbstractNamedEvent implements NamedEvent
     /**
      * @var array
      */
-    protected $events = [];
+    protected $subscribers = [];
 
     public function __construct($target = null)
     {
@@ -24,7 +24,20 @@ abstract class AbstractNamedEvent implements NamedEvent
 
     public function add(SubscribedEvent $event): void
     {
-        $this->events[] = $event;
+        $this->subscribers[] = $event;
+    }
+
+    public function remove(SubscribedEvent $event): bool
+    {
+        foreach ($this->subscribers as $index => $subscriber) {
+            if ($subscriber === $event) {
+                unset($this->subscribers[$index]);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function target()
@@ -32,9 +45,9 @@ abstract class AbstractNamedEvent implements NamedEvent
         return $this->target;
     }
 
-    public function events(): array
+    public function subscribers(): array
     {
-        return $this->events;
+        return $this->subscribers;
     }
 
     public function __toString(): string
