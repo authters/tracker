@@ -7,69 +7,19 @@ use Authters\Tracker\Contract\NamedEvent;
 trait HasDefaultAction
 {
     /**
-     * @var string
+     * @var NamedEvent
      */
-    private $messageName;
-
-    /**
-     * @var
-     */
-    private $message;
-
-    /**
-     * @var callable
-     */
-    private $messageHandler;
-
-    /**
-     * @var bool
-     */
-    private $isMessageHandled = false;
-
-    /**
-     * @var bool
-     */
-    private $isPropagationStopped = false;
+    protected $event;
 
     /**
      * @var \Throwable
      */
-    private $exception;
+    protected $exception;
 
     /**
-     * @var NamedEvent
+     * @var bool
      */
-    private $event;
-
-    public function messageName(): string
-    {
-        return $this->messageName;
-    }
-
-    public function setMessageName(string $messageName): void
-    {
-        $this->messageName = $messageName;
-    }
-
-    public function message()
-    {
-        return $this->message;
-    }
-
-    public function setMessage($message): void
-    {
-        $this->message = $message;
-    }
-
-    public function messageHandler(): callable
-    {
-        return $this->messageHandler;
-    }
-
-    public function setMessageHandler(callable $messageHandler): void
-    {
-        $this->messageHandler = $messageHandler;
-    }
+    protected $isPropagationStopped = false;
 
     public function exception(): ?\Throwable
     {
@@ -89,16 +39,6 @@ trait HasDefaultAction
     public function stopPropagation(bool $isPropagationStopped): void
     {
         $this->isPropagationStopped = $isPropagationStopped;
-    }
-
-    public function isMessageHandled(): bool
-    {
-        return $this->isMessageHandled;
-    }
-
-    public function setMessageHandled(bool $isMessageHandled): void
-    {
-        $this->isMessageHandled = $isMessageHandled;
     }
 
     public function setEvent(NamedEvent $event): void
